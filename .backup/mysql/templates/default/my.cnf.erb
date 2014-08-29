@@ -1,0 +1,98 @@
+[client]
+port = <%= @listen_port %>
+default-character-set = <%= @charcter_set %>
+socket = <%= @socket %>
+
+[mysql]
+no_auto_rehash
+#safe-updates
+prompt = '\u@<HOSTNAME> mysql>'
+# also can use utf8mb4
+default-character-set = <%= @charcter_set %>
+
+[mysqld]
+datadir = <%= @data_dir %>
+port = 3306
+socket = <%= @socket %>
+character_set_server = <%= @charcter_set %>
+
+skip_external_locking
+skip_name_resolve
+
+<% @mysql_params.each_pair do | name, value | %>
+  <%= name %> = <%= value %>
+<% end %>
+
+default_storage_engine = <%= @strage_engine %>
+
+explicit_defaults_for_timestamp
+sql_mode = "STRICT_ALL_TABLES,NO_ZERO_DATE,NO_ZERO_IN_DATE"
+
+binlog_checksum = CRC32           # NONE for back compatibility
+master_info_repository = TABLE    # FILE for back compatibility
+relay_log_info_repository = TABLE # FILE for back compatibility
+relay_log = relay-mysql-bin
+log_slave_updates
+replicate_ignore-db = mysql
+expire_logs_days = 60
+
+# Replication Master Server (default)
+# binary logging is required for replication
+log-bin=mysql-bin
+
+# binary logging format - mixed recommended
+binlog_format=MIXED
+
+slow_query_log
+long_query_time = 1
+log-slow-slave-statements
+
+# required unique id between 1 and 2^32 - 1
+# defaults to 1 if master-host is not set
+# but will not function as a master if omitted
+server-id = 1
+
+# also can use utf8mb4
+default-storage-engine=InnoDB
+innodb_strict_mode
+#
+### Uncomment the following if you are using InnoDB tables
+innodb_data_file_path = ibdata1:10M:autoextend
+innodb_data_home_dir = <%= @innodb_data_dir %>
+innodb_file_format = Barracuda
+innodb_file_per_table
+
+<% @innodb_params.each_pair do | name, value | %>
+  <%= name %> = <%= value %>
+<% end %>
+
+innodb_buffer_pool_load_at_startup = 1
+innodb_buffer_pool_dump_at_shutdown = 1
+
+innodb_checksum_algorithm = CRC32 # InnoDB for back compatibility
+innodb_io_capacity = 200 # 2000 for ssd
+innodb_large_prefix = 1
+innodb_print_all_deadlocks =1
+
+[mysqldump]
+quick
+max_allowed_packet = 16M
+
+[mysql]
+default-character-set = <%= @charcter_set %>
+no-auto-rehash
+# Remove the next comment character if you are not familiar with SQL
+#safe-updates
+
+[myisamchk]
+key_buffer_size = 8M
+sort_buffer_size = 8M
+read_buffer = 1M
+write_buffer = 1M
+
+[mysqlhotcopy]
+interactive-timeout
+
+[mysqld_safe]
+open-files-limit = 8192
+

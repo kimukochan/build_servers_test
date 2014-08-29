@@ -1,0 +1,72 @@
+# ローカル開発環境
+# ------------------------
+require File.dirname(__FILE__) + "/../chef/vagrant/config.rb"
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  config.vm.box     = "opscode_ubuntu-14.04" 
+  config.vm.box_url = "http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-14.04_chef-provisionerless.box"
+  config.vm.network "private_network", ip: "192.168.33.10"
+  user = "vagrant"
+  config.ssh.username = user 
+  config.vm.synced_folder "./workspaces", "/home/#{user}/workspaces", create: true
+  config.vm.provision :shell, :path => "#{$path[:vagrant_script]}/bootstrap.sh"
+  #config.vm.provision :shell, :path => "#{$path[:vagrant_script]}/ubuntu.sh"
+
+  # name:    local
+  # servers: WEB, DB
+  # os:      ubuntu
+  # TODO: webとdbをわけるかもしれない、その場合private_networkはわける必要がある  by k.kimura
+  # ------------------------
+  config.vm.define :local do |local|
+    local.vm.provider :virtualbox do |vb, override|
+    end
+
+    # Chef
+    # ------------------------
+    local.omnibus.chef_version = :latest
+    local.vm.provision "chef_solo" do |chef|
+      chef.cookbooks_path = [ $path[:berks_cookbooks], $path[:site_cookbooks] ]
+      chef.run_list = %w[
+        recipe[git]
+        recipe[vim]
+        recipe[emacs]
+        recipe[ruby_build]
+        recipe[rbenv::system]
+        recipe[nodejs]
+        recipe[mysql::server]
+        recipe[nginx::source]
+      ]
+      chef.json = {
+        :nginx => {
+          :version => $nginx[:version],
+        },
+
+        :mysql => {
+          :version                => $mysql[:version],
+          :server_root_password   => "",
+          :server_debian_password => "",
+          :server_repl_password   => "",
+        },
+
+        :rbenv => {
+          :global => $ruby[:version],
+          :rubies => [ $ruby[:version] ],
+          :gems   => {
+            $ruby[:version] => [
+              { "name" => "rbenv-rehash" },
+              { "name" => "bundler" },
+              { "name" => "rails",
+                "version" => $rails[:version]
+              }
+            ]
+          },
+        },
+
+      }
+    end
+  end
+
+end

@@ -1,0 +1,117 @@
+# AWS 
+# ------------------------
+Dotenv.load
+require File.dirname(__FILE__) + "/../chef/vagrant/config.rb"
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  config.vm.box     = "dummy"
+  config.vm.box_url = "https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box"
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+  config.vm.provision :shell, :path => "#{$path[:vagrant_script]}/bootstrap.sh"
+
+  # name:    web 
+  # servers: WEB
+  # os:      ubuntu 
+  # TODO: name:webはaws_tagのnameとあわせる
+  # ---------------------------------
+  config.vm.define :web do |web|
+    web.vm.provider :aws do |aws, override|
+
+      # SSHユーザー名 AMIがamiならec2-user
+      # amazon ami => ec2-user
+      # ubuntu ami => ubuntu
+      override.ssh.username = "ubuntu"
+
+      # ダウンロードしたpemファイルを指定
+      override.ssh.private_key_path = ENV['PRIVATE_KEY_PATH']
+
+      # アクセスキー
+      aws.access_key_id      = ENV['ACCESS_KEY_ID']
+
+      # シークレットアクセスキー
+      aws.secret_access_key  = ENV['SECRET_ACCESS_KEY']
+
+      # [Key pair name]
+      aws.keypair_name       = ENV['KEY_PAIR_NAME']
+
+      # [Instance type]
+      aws.instance_type      = "t2.micro"
+
+      # [AMI ID] 使用するAMI
+      aws.ami                = "ami-a1124fa0" # ubuntu 
+
+      # 東京は ap-northeast-1
+      aws.region             = "ap-northeast-1"
+
+      # [Availability zone]
+      #aws.availability_zone = "ap-northeast-1a"
+
+      # [Security group]
+      aws.security_groups    = ["launch-wizard-1"]
+
+      # [] VPCを使用する場合は指定
+      #aws.subnet_id          = ""
+
+      # [] VPCを使用する場合は指定
+      #aws.private_id_address = ""
+
+      # 自動的にElastic IPを取得して割り当てる
+      #aws.elastic_ip         = true 
+
+      # サーバー名等
+      aws.tags = {
+        "Name"        => "web_vagrant_test",
+        "Description" => ""
+      }
+
+      # sudo 権限付与
+      #aws.user_data = <<-USER_DATA
+      #  #!/bin/sh
+      #  echo 'Defaults:root !requiretty\nDefaults:ubuntu !requiretty' > /etc/sudoers.d/999-vagrant-cloud-init-requiretty
+      #  chmod 440 /etc/sudoers.d/999-vagrant-cloud-init-requiretty
+      #USER_DATA
+
+    end
+
+    web.vm.provision :shell, :path => "#{$path[:vagrant_script]}/ubuntu.sh"
+
+    # Chef
+    # ------------------------
+    web.omnibus.chef_version = :latest
+    web.vm.provision "chef_solo" do |chef|
+      chef.cookbooks_path = [ $path[:berks_cookbooks], $path[:site_cookbooks] ]
+      chef.run_list = %w[
+        recipe[git]
+        recipe[vim]
+        recipe[emacs]
+        recipe[ruby_build]
+        recipe[rbenv::system]
+        recipe[nodejs]
+        recipe[nginx::source]
+      ]
+      chef.json = {
+        :nginx => {
+          :version => $nginx[:version],
+        },
+        :rbenv => {
+          :global => $ruby[:version],
+          :rubies => [ $ruby[:version] ],
+          :gems   => {
+            $ruby[:version] => [
+              { "name" => "rbenv-rehash" },
+              { "name" => "bundler" },
+              { "name" => "rails",
+                "version" => $rails[:version]
+              }
+            ]
+          },
+        },
+
+      }
+    end
+  end
+
+end
