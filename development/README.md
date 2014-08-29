@@ -1,5 +1,9 @@
 # ローカル開発環境
 
+
+
+### 文言定義
+
 **guest_machines** - 仮想サーバー
 
 **host_machines** - Mac
