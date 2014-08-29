@@ -7,7 +7,7 @@ AWS上の本番サーバー構築を自動化、コントロールする
 
 |文言|説明|
 |:--|:--|
-|aws_machines|AWSの仮想マシン|
+|aws_machines|AWSの仮想マシン（ec2）|
 |**web**|Vagrantfil に定義しているマシーン（ホスト）名|
 |aws console|amazon提供のAWSの管理画面|
 
@@ -28,7 +28,7 @@ $ pwd
 
 
 
-## 新規EC2サーバーを構築する
+## aws_machines を構築する
 
 
 ### 1. .envを作成する
