@@ -7,11 +7,13 @@
 |:--|:--|
 |**guest_machines**|仮想サーバー|
 |**host_machines**|Mac|
-|**local**|Vagrantfil に定義しているマシーン（ホスト）名の例|
+|**local**|Vagrantfil に定義しているマシーン（ホスト）名|
 
 ```
 例: config.vm.define :local do |local|
 ```
+
+
 
 
 
