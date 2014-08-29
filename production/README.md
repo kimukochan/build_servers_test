@@ -1,4 +1,7 @@
-# AWS本番環境
+# Vagrant for production
+
+AWSに構築する本番サーバーの作業をコントロールする
+
 
 **文言定義**
 
@@ -10,14 +13,23 @@
 
 
 
-## 新規EC2サーバーを構築する
 
-作業ディレクトリ
+## Setup
+
+### 1. 作業ディレクトリに移動
 
 ```
 $ pwd
 （省略）/production
 ```
+
+
+
+
+
+
+## 新規EC2サーバーを構築する
+
 
 ### 1. .envを作成する
 
@@ -30,20 +42,18 @@ KEY_PAIR_NAME     = "[user]"
 PRIVATE_KEY_PATH  = "~/.ssh/[user].pem"
 ```
 
-[ ]の中身は権限ある人に聞く
+* [ ]の中身は権限ある人に聞く
+
 
 ### 2. 実行する
 
 ```
-$ pwd
-（省略）/production
-
 $ vagrant up web --provider=aws
 ```
 
 
 
-## 操作
+## Sample
 
 ### ログインする
 
@@ -57,7 +67,7 @@ $ vagrant ssh web
 $ vagrant destroy web
 ```
 
-aws console では Instance state が terminate となり数時間後に表示されなくなる
+* aws console では Instance state が terminate となり数時間後に表示されなくなる
 
 
 
