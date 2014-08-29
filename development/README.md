@@ -46,7 +46,6 @@ $ vagrant up local
 ### workspaces ディレクトリとは
 
 * **host_machines**、**guest_machines** の共有ディレクトリ（マウント）となり、開発メンバーはこのディレクトリ内にアプリケーションを配置して開発をする
-
 * **host_machines** のエディターを使って編集し **guest_machines** でサーバーを動かすことが可能となる
 
 
