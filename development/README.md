@@ -32,7 +32,7 @@ $ pwd
 
 
 
-## **guest_machines** を構築する
+## guest_machines を構築する
 
 ```
 $ vagrant up local
@@ -43,7 +43,7 @@ $ vagrant up local
 * **/workspaces** ディレクトリが生成される
 
 
-**workspaces ディレクトリとは**
+### workspaces ディレクトリとは
 
 **host_machines**、**guest_machines** の共有ディレクトリ（マウント）となり、開発メンバーはこのディレクトリ内にアプリケーションを配置して開発をする
 
