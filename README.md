@@ -1,10 +1,31 @@
-# Vagrant, Chef サーバー自動構築
+# Vagrant, Chef for servers
+
+開発、本番サーバーをコントロールする
+
+
 
 ## Chef
-ローカル、本番共通
+開発、本番サーバーに必要な設定、インストールするミドルウェアなどをコントロールする
+
+
+
 
 ## development
-ローカル開発環境
+
+Macに構築する共通開発サーバーの作業をコントロールする
+
+
+
 
 ## production
-AWS本番環境
+
+AWSに構築する本番サーバーの作業をコントロールする
+
+
+## Tips
+
+* **Vagrant** の基礎
+https://hachimenroppi.qiita.com/kimukochan/items/7780719894edd2ae386a
+
+* **Chef** の基礎
+https://hachimenroppi.qiita.com/kimukochan/items/3a068da965035b38fd31
