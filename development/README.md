@@ -1,4 +1,6 @@
-# ローカル開発環境
+# Vagrant for development
+
+Macに構築する共通開発サーバーの作業をコントロールする
 
 
 **文言定義**
@@ -16,14 +18,23 @@
 
 
 
+
 ## setup
 
-**Vagrantfile** を元に **guest_machines** を構築する
+
+**作業ディレクトリ**
 
 ```
 $ pwd
 （省略）/development
+```
 
+
+
+
+## **guest_machines** を構築する
+
+```
 $ vagrant up local
 ```
 
@@ -32,10 +43,7 @@ $ vagrant up local
 * **/workspaces** ディレクトリが生成される
 
 
-
-
-
-## workspaces ディレクトリとは
+**workspaces ディレクトリとは**
 
 **host_machines**、**guest_machines** の共有ディレクトリ（マウント）となり、開発メンバーはこのディレクトリ内にアプリケーションを配置して開発をする
 
