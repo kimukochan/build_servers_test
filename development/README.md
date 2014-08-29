@@ -63,9 +63,9 @@ $ cd my_app
 $ rails s
 ```
 
-**Vagrantfile** に設定されている **private_network** のURLにアクセスする
+* **Vagrantfile** に設定されている **private_network** のURLにアクセスする
 
-http://192.168.33.10:3000
+* http://192.168.33.10:3000
 
 
 
