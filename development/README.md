@@ -3,11 +3,11 @@
 
 **文言定義**
 
-**guest_machines** - 仮想サーバー
-
-**host_machines** - Mac
-
-**local** - Vagrantfil に定義しているマシーン（ホスト）名の例
+|文言|説明|
+|:--|:--|
+|**guest_machines**|仮想サーバー|
+|**host_machines**|Mac|
+|**local**|Vagrantfil に定義しているマシーン（ホスト）名の例|
 
 ```
 例: config.vm.define :local do |local|
