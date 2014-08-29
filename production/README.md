@@ -83,5 +83,5 @@ http://nmbr8.com/blog/2014/05/22/how-to-define-and-control-multiple-guest-machin
 * 一度作られたサーバに変更をする場合はChefを使う?
 * 複数同時に作る場合の方法は運用してきめていく。まわりに聞く。
 * ひとつのサーバをつくりそれをマスターとしてboxをつくって複数台つくったほうが早いし、安全と思われる。
-
+* 基本は blue green development の考えかたにそえばいいと思う
 
