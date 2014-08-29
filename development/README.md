@@ -22,7 +22,7 @@ Macに構築する共通開発サーバーの作業をコントロールする
 ## Setup
 
 
-### 作業ディレクトリに移動する
+### 1. 作業ディレクトリに移動する
 
 ```
 $ pwd
@@ -34,7 +34,7 @@ $ pwd
 
 ## guest_machines を構築する
 
-### 実行する
+### 1. 実行する
 
 ```
 $ vagrant up local
@@ -45,7 +45,7 @@ $ vagrant up local
 * **/workspaces** ディレクトリが生成される
 
 
-### workspaces ディレクトリとは
+**workspaces ディレクトリとは**
 
 * **host_machines**、**guest_machines** の共有ディレクトリ（マウント）となり、開発メンバーはこのディレクトリ内にアプリケーションを配置して開発をする
 * **host_machines** のエディターを使って編集し **guest_machines** でサーバーを動かすことが可能となる
