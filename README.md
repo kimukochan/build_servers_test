@@ -30,4 +30,4 @@ https://hachimenroppi.qiita.com/kimukochan/items/7780719894edd2ae386a
 https://hachimenroppi.qiita.com/kimukochan/items/3a068da965035b38fd31
 
 
-![alt tag](http://url/to/vagrant-development.png)
+![alt tag](vagrant-development.png)
