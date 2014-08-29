@@ -4,7 +4,13 @@
 
 **host_machines** - Mac
 
-**local** - **Vagrantfile** に定義しているマシーン（ホスト）名となる
+**local** - Vagrantfil に定義しているマシーン（ホスト）名の例
+
+```
+例: config.vm.define :local do |local|
+```
+
+
 
 
 
@@ -25,15 +31,20 @@ $ vagrant up local
 * **/workspaces** ディレクトリが生成される
 
 
+
+
+
 ## workspaces ディレクトリとは
 
 **host_machines**、**guest_machines** の共有ディレクトリ（マウント）となり、開発メンバーはこのディレクトリ内にアプリケーションを配置して開発をする
 
-**host_machines** のエディターを使って編集し **guest_machines** でサーバーを動かすことが可能となる
+* **host_machines** のエディターを使って編集し **guest_machines** でサーバーを動かすことが可能となる
 
 
 
-## 使い方例
+
+
+## Sample
 
 ```
 $ vagrant ssh local
@@ -48,5 +59,11 @@ $ rails s
 http://192.168.33.10:3000
 
 
-## 情報
+
+## Tips
+
+
+
+
+## その他
 開発メンバー間での個別の開発環境の違いにより発生する問題をなくす
